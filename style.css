@@ -269,42 +269,56 @@ textarea {
 /* Danh sách thiết bị - Bản tối ưu cho Desktop */
 .device-grid {
     display: grid;
-    /* Chia 2 cột cố định trên Desktop, mỗi cột chiếm 50% */
-    grid-template-columns: 1fr 1fr; 
-    column-gap: 30px; /* Khoảng cách giữa 2 cột */
-    row-gap: 15px;    /* Khoảng cách giữa các hàng */
+    /* Chia 2 cột đều nhau trên Desktop */
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 15px 25px !important;
     background: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    margin-top: 10px;
+    padding: 20px !important;
+    border-radius: 15px;
+    margin: 10px 0 20px 0;
+    box-sizing: border-box;
 }
 
+/* Quan trọng: Định dạng nhãn bao quanh checkbox */
 .device-grid label {
-    display: flex;
-    align-items: center; /* Căn giữa checkbox với dòng chữ */
-    gap: 12px;           /* Khoảng cách từ ô tick đến chữ */
-    font-size: 0.9rem;
+    display: flex !important;
+    align-items: flex-start !important; /* Căn lề theo đỉnh chữ nếu chữ dài xuống dòng */
+    gap: 10px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
     color: #333;
     cursor: pointer;
     line-height: 1.4;
-    /* Loại bỏ nowrap nếu tên máy quá dài để nó tự xuống dòng đẹp */
-    white-space: normal; 
-    word-break: break-word;
+    white-space: normal !important; /* Cho phép xuống dòng nếu chữ quá dài */
+    margin: 0 !important;
+    text-align: left !important;
 }
 
-/* Tăng kích thước ô Checkbox cho dễ bấm */
+/* Định dạng ô checkbox để không bị biến dạng */
 .device-grid input[type="checkbox"] {
-    min-width: 18px;
-    min-height: 18px;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    margin-top: 2px !important; /* Căn chỉnh cho khớp với dòng chữ đầu tiên */
     cursor: pointer;
-    accent-color: #c61225; /* Màu đỏ thương hiệu cho ô tick */
+    accent-color: var(--primary-red);
 }
 
-/* Mobile: Tự động dồn thành 1 cột */
+/* --- RESPONSIVE CHO MOBILE --- */
 @media (max-width: 768px) {
     .device-grid {
-        grid-template-columns: 1fr;
-        padding: 15px;
+        grid-template-columns: 1fr !important; /* Chuyển về 1 cột trên điện thoại */
+        padding: 15px !important;
+    }
+    
+    .review-card {
+        padding: 20px !important;
+        width: 100%;
+    }
+    
+    .row {
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin-bottom: 10px !important;
     }
 }
 
