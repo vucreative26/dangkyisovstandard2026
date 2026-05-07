@@ -1,5 +1,5 @@
 // 1. CẤU HÌNH - Thay URL Web App của bạn vào đây
-const SCRIPT_URL = "URL_WEB_APP_MOI_CUA_BAN"; 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWFN4wIJTxilTdgDXjHzsylT0YWOOtK80xPjU-XiBy79Ngpkimo_Y90a1rUBS9keAX/exec"; 
 
 const maKhachInput = document.getElementById('maKhachHang');
 const tenSpaInput = document.getElementById('tenSpa');
