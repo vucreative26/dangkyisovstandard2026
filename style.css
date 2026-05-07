@@ -269,56 +269,46 @@ textarea {
 /* Danh sách thiết bị - Bản tối ưu cho Desktop */
 .device-grid {
     display: grid;
-    /* Chia 2 cột đều nhau trên Desktop */
-    grid-template-columns: repeat(2, 1fr) !important; 
-    gap: 15px 25px !important;
+    /* Chia 2 cột bằng nhau tuyệt đối */
+    grid-template-columns: 1fr 1fr !important; 
+    /* Khoảng cách giữa các hàng và cột */
+    gap: 15px 40px !important; 
     background: #fff;
-    padding: 20px !important;
+    padding: 25px !important;
     border-radius: 15px;
     margin: 10px 0 20px 0;
-    box-sizing: border-box;
 }
 
-/* Quan trọng: Định dạng nhãn bao quanh checkbox */
+/* Căn chỉnh từng dòng thiết bị */
 .device-grid label {
-    display: flex !important;
-    align-items: flex-start !important; /* Căn lề theo đỉnh chữ nếu chữ dài xuống dòng */
-    gap: 10px !important;
+    display: grid !important;
+    /* Cố định chiều rộng cột checkbox để chữ luôn bắt đầu từ một đường thẳng */
+    grid-template-columns: 20px 1fr !important; 
+    align-items: center !important; 
+    gap: 12px !important;
     font-size: 0.9rem !important;
     font-weight: 500 !important;
     color: #333;
     cursor: pointer;
-    line-height: 1.4;
-    white-space: normal !important; /* Cho phép xuống dòng nếu chữ quá dài */
     margin: 0 !important;
-    text-align: left !important;
+    /* Đảm bảo chữ dài không làm lệch hàng */
+    line-height: 1.2 !important; 
 }
 
-/* Định dạng ô checkbox để không bị biến dạng */
+/* Định dạng ô checkbox */
 .device-grid input[type="checkbox"] {
-    min-width: 18px !important;
-    min-height: 18px !important;
-    margin-top: 2px !important; /* Căn chỉnh cho khớp với dòng chữ đầu tiên */
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
     cursor: pointer;
     accent-color: var(--primary-red);
 }
 
-/* --- RESPONSIVE CHO MOBILE --- */
+/* Tối ưu cho màn hình nhỏ */
 @media (max-width: 768px) {
     .device-grid {
-        grid-template-columns: 1fr !important; /* Chuyển về 1 cột trên điện thoại */
-        padding: 15px !important;
-    }
-    
-    .review-card {
-        padding: 20px !important;
-        width: 100%;
-    }
-    
-    .row {
-        flex-direction: column !important;
-        gap: 10px !important;
-        margin-bottom: 10px !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
     }
 }
 
