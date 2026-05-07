@@ -156,3 +156,46 @@ body {
     font-size: 0.75rem;
     font-weight: 600;
 }
+/* --- GIAO DIỆN CHO ĐIỆN THOẠI --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px; /* Giảm khoảng cách lề */
+    }
+
+    .main-content {
+        flex-direction: column; /* Chuyển bố cục từ hàng ngang sang hàng dọc */
+        gap: 20px;
+    }
+
+    /* 1. ẨN HÌNH ẢNH TRÊN ĐIỆN THOẠI */
+    .left-side {
+        display: none; 
+    }
+
+    /* 2. TỐI ƯU FORM CHO ĐIỆN THOẠI */
+    .right-side {
+        width: 100%; /* Form chiếm hết chiều ngang */
+    }
+
+    .registration-card {
+        padding: 15px; /* Giảm padding cho đỡ chiếm diện tích */
+    }
+
+    .row {
+        flex-direction: column; /* Mã khách hàng và Giấy phép xếp chồng lên nhau */
+    }
+
+    .header-menu {
+        flex-wrap: wrap; /* Menu tự xuống dòng nếu quá dài */
+        gap: 8px;
+    }
+
+    .header-menu button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .subtitle {
+        font-size: 1.4rem; /* Giảm cỡ chữ tiêu đề cho vừa màn hình nhỏ */
+    }
+}
