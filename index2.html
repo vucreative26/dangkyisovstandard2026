@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký Xét Duyệt - ISOV 2026</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header-menu">
+            <button onclick="location.href='index.html'">ĐĂNG KÝ THAM GIA</button>
+            <button class="active" onclick="location.href='index2.html'">ĐĂNG KÝ XÉT DUYỆT</button>
+            <button>KIỂM TRA</button>
+            <button>ĐĂNG NHẬP</button>
+        </header>
+
+        <main class="main-content">
+            <form id="reviewForm" class="registration-card review-card">
+                <h2 class="form-title">ĐĂNG KÝ XÉT DUYỆT</h2>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label>MÃ KHÁCH HÀNG (Bắt buộc)</label>
+                        <input type="text" id="maKhachHang" placeholder="điền vào đây" required>
+                        <small id="statusMsg"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>TÊN SPA / CƠ SỞ THẨM MỸ</label>
+                        <input type="text" id="tenSpa" placeholder="Hệ thống tự điền" readonly>
+                    </div>
+                </div>
+
+                <div id="additionalFields" style="display: none;">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>SỐ LƯỢNG GIƯỜNG</label>
+                            <input type="number" id="soGiuong" placeholder="điền vào đây">
+                        </div>
+                        <div class="form-group">
+                            <label>SỐ LƯỢNG NHÂN SỰ</label>
+                            <input type="number" id="soNhanSu" placeholder="điền vào đây">
+                        </div>
+                    </div>
+
+                    <div class="row align-start">
+                        <div class="form-group">
+                            <label>LIỆU TRÌNH HIỆN CÓ TẠI SPA</label>
+                            <p class="sub-label">• Liệu trình cơ bản</p>
+                            <textarea id="lieuTrinhCoBan" rows="3" placeholder="điền vào đây"></textarea>
+                            
+                            <p class="sub-label" style="margin-top:10px">• Liệu trình nâng cao</p>
+                            <textarea id="lieuTrinhNangCao" rows="3" placeholder="điền vào đây"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>DANH SÁCH THIẾT BỊ</label>
+                            <p class="sub-label">• Thiết bị cơ bản</p>
+                            <div class="device-grid">
+                                <label><input type="checkbox" name="deviceBasic" value="Máy tiệt trùng"> Máy tiệt trùng</label>
+                                <label><input type="checkbox" name="deviceBasic" value="Máy điện di"> Máy điện di</label>
+                                <label><input type="checkbox" name="deviceBasic" value="Máy Dr. Pen"> Máy Dr. Pen</label>
+                                <label><input type="checkbox" name="deviceBasic" value="Máy xông hơi"> Máy xông hơi</label>
+                                <label><input type="checkbox" name="deviceBasic" value="Máy tiêm Mesotherapy"> Máy tiêm Meso</label>
+                                <label><input type="checkbox" name="deviceBasic" value="Máy ánh sáng sinh học"> Máy ánh sáng</label>
+                            </div>
+
+                            <p class="sub-label" style="margin-top:10px">• Thiết bị nâng cao</p>
+                            <div class="device-grid">
+                                <label><input type="checkbox" name="deviceAdvanced" value="Máy Laser"> Máy Laser</label>
+                                <label><input type="checkbox" name="deviceAdvanced" value="Máy Soi da"> Máy Soi da</label>
+                                <label><input type="checkbox" name="deviceAdvanced" value="Máy RF"> Máy RF</label>
+                                <label><input type="checkbox" name="deviceAdvanced" value="Máy Hifu"> Máy Hifu</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-start">
+                        <div class="form-group">
+                            <label>BẰNG CẤP CHUYÊN MÔN</label>
+                            <textarea id="bangCap" style="height: 120px;" placeholder="điền vào đây"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>HỒ SƠ / GIẤY PHÉP</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="fileUpload" multiple accept="image/*,.pdf">
+                                <span id="fileCount">Chọn tệp</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="center-btn">
+                        <button type="submit" id="submitBtn" class="btn-submit">GỬI THÔNG TIN XÉT DUYỆT</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <footer class="footer">
+            <p>© 2026 Ho Anh Vu. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="script2.js"></script>
+</body>
+</html>
