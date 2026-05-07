@@ -1,16 +1,10 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWFN4wIJTxilTdgDXjHzsylT0YWOOtK80xPjU-XiBy79Ngpkimo_Y90a1rUBS9keAX/exec"; // Dán URL Deployment mới vào đây
-
-const maKhachInput = document.getElementById('maKhachHang');
-const tenSpaInput = document.getElementById('tenSpa');
-const additionalFields = document.getElementById('additionalFields');
-const statusMsg = document.getElementById('statusMsg');
-
-// Tra cứu mã khách hàng
 maKhachInput.addEventListener('input', async function() {
     const maKhach = this.value.trim().toUpperCase();
-    if (maKhach.length < 3) {
-        resetFormStatus();
-        return;
+    
+    // Chỉ bắt đầu tìm khi nhập đủ từ 4 ký tự trở lên (ví dụ: TVV1)
+    if (maKhach.length < 4) {
+        // Không gọi reset ở đây để tránh mất dữ liệu khi đang gõ dở
+        return; 
     }
 
     statusMsg.innerText = "Đang kiểm tra...";
@@ -21,19 +15,20 @@ maKhachInput.addEventListener('input', async function() {
         const result = await response.json();
 
         if (result.success) {
+            // ĐIỂM QUAN TRỌNG: Gán giá trị và giữ nguyên display block
             tenSpaInput.value = result.tenSpa;
             statusMsg.innerText = "✓ Đã xác thực Spa: " + result.tenSpa;
             statusMsg.style.color = "green";
-            additionalFields.style.display = "block";
+            additionalFields.style.display = "block"; 
             window.userData = result; 
         } else {
-            tenSpaInput.value = "";
-            statusMsg.innerText = "✗ Không tìm thấy mã. Vui lòng đăng ký tham gia trước.";
+            // Chỉ xóa khi hệ thống báo chắc chắn không thấy mã
+            statusMsg.innerText = "✗ Không tìm thấy mã.";
             statusMsg.style.color = "red";
-            additionalFields.style.display = "none";
+            // additionalFields.style.display = "none"; // Cân nhắc giữ nguyên để user không bị khó chịu
         }
     } catch (e) {
-        statusMsg.innerText = "✗ Lỗi kết nối hệ thống.";
+        console.error("Lỗi kết nối:", e);
     }
 });
 
