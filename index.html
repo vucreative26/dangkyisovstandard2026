@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký ISOV KOREA STANDARD SPA 2026</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header-menu">
+            <button class="active">ĐĂNG KÝ THAM GIA</button>
+        </header>
+
+        <main class="main-content">
+            <div class="left-side">
+                <h1 class="title">ĐĂNG KÝ THAM GIA</h1>
+                <h2 class="subtitle">ISOV KOREA STANDARD SPA 2026</h2>
+                <div class="image-container">
+                    <img src="assets/images/anh_isov_standard2026.png" alt="ISOV Korea Standard Spa 2026" class="featured-image">
+                </div>
+            </div>
+
+            <div class="right-side">
+                <form id="registrationForm" class="registration-card">
+                    <div class="form-group">
+                        <label>TEAM PHỤ TRÁCH</label>
+                        <select id="teamPhuTrach" required>
+                            <option value="">-- Chọn Team --</option>
+                            <option value="Miền Tây">Miền Tây</option>
+                            <option value="Miền Đông">Miền Đông</option>
+                            <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>SALE PHỤ TRÁCH</label>
+                        <select id="salePhuTrach" required>
+                            <option value="">-- Chọn Tên Sale --</option>
+                            <option value="Như Nguyệt">Như Nguyệt</option>
+                            <option value="Thuý Vi">Thuý Vi</option>
+                            <option value="Thuý Điểm">Thuý Điểm</option>
+                            <option value="Yến Nhi">Yến Nhi</option>
+                            <option value="Phúc Nhi">Phúc Nhi</option>
+                            <option value="Thảo Uyên">Thảo Uyên</option>
+                            <option value="Tường Vân">Tường Vân</option>
+                            <option value="Mai Hân">Mai Hân</option>
+                            <option value="Uyên Phương">Uyên Phương</option>
+                            <option value="Thanh Tâm">Thanh Tâm</option>
+                            <option value="Bích Phượng">Bích Phượng</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>TÊN SPA / CƠ SỞ THẨM MỸ</label>
+                        <input type="text" id="tenSpa" placeholder="điền vào đây" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>TÊN KHÁCH HÀNG</label>
+                        <input type="text" id="tenKhachHang" placeholder="điền vào đây" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group flex-1">
+                            <label>MÃ KHÁCH HÀNG</label>
+                            <input type="text" id="maKhachHang" placeholder="điền vào đây" required>
+                        </div>
+                        <div class="form-group flex-1">
+                            <label>HỒ SƠ/GIẤY PHÉP</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="fileUpload" multiple accept="image/*,.pdf" required>
+                                <span id="fileCount">Chọn tệp (2-20 file)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn-submit">GỬI THÔNG TIN ĐĂNG KÝ</button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2026 Ho Anh Vu. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+:root {
+    --primary-red: #c61225;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #fff;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header-menu {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.header-menu button {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 20px;
+    background: #e5e5e5;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.header-menu button.active {
+    background: #e8d5d5;
+}
+
+.main-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.left-side {
+    flex: 1.2;
+    text-align: center;
+}
+
+.title {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    font-weight: 800;
+}
+
+.subtitle {
+    color: var(--primary-red);
+    font-size: 1.8rem;
+    margin-top: 0;
+    font-weight: 900;
+}
+
+/* Khung chứa ảnh mới cập nhật */
+.image-container {
+    width: 100%;
+    height: 380px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.featured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Giúp ảnh không bị méo, tự fill đầy khung */
+    display: block;
+}
+
+.right-side {
+    flex: 1;
+}
+
+.registration-card {
+    background: #ebebeb;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 800;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.flex-1 { flex: 1; }
+
+.file-input-wrapper {
+    position: relative;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#fileUpload {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    cursor: pointer;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: var(--primary-red);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.btn-submit:disabled {
+    background-color: #999;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
