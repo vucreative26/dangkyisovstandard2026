@@ -11,8 +11,8 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
     const submitBtn = document.getElementById('submitBtn');
     const files = document.getElementById('fileUpload').files;
 
-    if (files.length < 2 || files.length > 20) {
-        alert("Vui lòng chọn từ 2 đến 20 file hồ sơ.");
+    if (files.length < 1 || files.length > 20) {
+        alert("Vui lòng chọn ít nhất 1 file hồ sơ.");
         return;
     }
 
@@ -51,7 +51,7 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
 
         alert("Đã gửi thông tin! Trạng thái: Đã upload.");
         document.getElementById('registrationForm').reset();
-        document.getElementById('fileCount').innerText = 'Chọn tệp (2-20 file)';
+        document.getElementById('fileCount').innerText = 'Chọn tệp (tối thiểu 1 file)';
 
     } catch (error) {
         alert("Lỗi: " + error.message);
