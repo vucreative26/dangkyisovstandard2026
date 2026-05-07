@@ -199,3 +199,108 @@ body {
         font-size: 1.4rem; /* Giảm cỡ chữ tiêu đề cho vừa màn hình nhỏ */
     }
 }
+
+.full-width { max-width: 100% !important; }
+.form-title { color: var(--primary-red); margin-bottom: 20px; text-align: center; }
+
+textarea {
+    width: 100%;
+    border-radius: 15px;
+    padding: 10px 15px;
+    border: none;
+    font-family: inherit;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.checkbox-group {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.checkbox-group label {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Đã tích hợp sẵn Responsive từ lần trước, chỉ cần đảm bảo .row là flex */
+@media (max-width: 768px) {
+    .row { flex-direction: column; gap: 0; }
+    #additionalFields .row { margin-bottom: 0; }
+}
+
+/* Container chính cho form xét duyệt */
+.review-card {
+    width: 95%;
+    max-width: 1000px;
+    padding: 40px !important;
+}
+
+.row {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.row .form-group {
+    flex: 1;
+}
+
+.align-start {
+    align-items: flex-start;
+}
+
+.sub-label {
+    font-size: 0.8rem;
+    color: #c61225;
+    font-weight: bold;
+    margin: 5px 0;
+    text-align: left;
+}
+
+/* Grid cho thiết bị */
+.device-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.device-grid label {
+    font-size: 0.75rem !important;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 0 !important;
+    font-weight: 500 !important;
+}
+
+.center-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Responsive cho Mobile: Chuyển tất cả row thành cột dọc */
+@media (max-width: 768px) {
+    .review-card {
+        padding: 20px !important;
+    }
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .device-grid {
+        grid-template-columns: 1fr;
+    }
+}
