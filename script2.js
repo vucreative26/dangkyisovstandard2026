@@ -116,4 +116,46 @@ document.getElementById('reviewForm').addEventListener('submit', async function(
 
         const fileData = await Promise.all(filePromises);
 
-        // Thu thập dữ liệu từ các Check
+        // Thu thập dữ liệu từ các Checkbox thiết bị
+        const getCheckedValues = (name) => {
+            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+                        .map(cb => cb.value).join(', ');
+        };
+
+        const payload = {
+            action: "submitReview",
+            maKhach: maKhachInput.value.trim().toUpperCase(),
+            tenSpa: tenSpaInput.value,
+            team: window.userData.team,
+            sale: window.userData.sale,
+            tenKhach: window.userData.tenKhach,
+            soGiuong: document.getElementById('soGiuong').value,
+            soNhanSu: document.getElementById('soNhanSu').value,
+            lieuTrinhCoBan: document.getElementById('lieuTrinhCoBan').value,
+            lieuTrinhNangCao: document.getElementById('lieuTrinhNangCao').value,
+            thietBiCoBan: getCheckedValues('deviceBasic'),
+            thietBiNangCao: getCheckedValues('deviceAdvanced'),
+            bangCap: document.getElementById('bangCap').value,
+            files: fileData
+        };
+
+        const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+
+        const finalResult = await response.json();
+        
+        if (finalResult.status === 'success') {
+            alert("Chúc mừng! Hồ sơ xét duyệt của bạn đã được gửi thành công.");
+            location.reload();
+        } else {
+            throw new Error(finalResult.message);
+        }
+
+    } catch (error) {
+        alert("Có lỗi xảy ra: " + error.message);
+        btn.disabled = false;
+        btn.innerText = "GỬI THÔNG TIN XÉT DUYỆT";
+    }
+});
