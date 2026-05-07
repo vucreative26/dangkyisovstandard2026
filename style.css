@@ -269,20 +269,39 @@ textarea {
 /* Grid cho thiết bị */
 .device-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    /* Chia 2 cột đều nhau và đảm bảo không bị tràn */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px 15px; /* Khoảng cách dọc 12px, ngang 15px */
     background: #fff;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 15px;
+    border-radius: 15px;
+    align-items: center;
 }
 
 .device-grid label {
-    font-size: 0.75rem !important;
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 0 !important;
+    gap: 8px; /* Khoảng cách giữa checkbox và chữ */
+    font-size: 0.85rem !important;
     font-weight: 500 !important;
+    line-height: 1.2;
+    cursor: pointer;
+    white-space: nowrap; /* Ngăn không cho chữ xuống dòng gây đè lên nhau */
+}
+
+/* Tùy chỉnh riêng cho checkbox để đồng bộ */
+.device-grid input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin: 0; /* Xóa margin mặc định */
+}
+
+/* Trên điện thoại thì dồn thành 1 cột để không bị hẹp */
+@media (max-width: 600px) {
+    .device-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .center-btn {
