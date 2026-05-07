@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwf1egNkns_aAJwoUlcNXeTE27_LjJCnXMJilEoST0bzElFfmdwZr6auWVJKZTgcKBh/exec"
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWFN4wIJTxilTdgDXjHzsylT0YWOOtK80xPjU-XiBy79Ngpkimo_Y90a1rUBS9keAX/exec"
 
 document.getElementById('fileUpload').addEventListener('change', function(e) {
     const count = e.target.files.length;
