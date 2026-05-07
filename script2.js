@@ -1,90 +1,107 @@
-// 1. CẤU HÌNH HỆ THỐNG - Dán URL Web App mới nhất của bạn vào đây
+/**
+ * CẤU HÌNH HỆ THỐNG
+ * Thay thế URL dưới đây bằng URL Web App mới nhất sau khi bạn "Deploy -> New Deployment" trong Apps Script
+ */
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWFN4wIJTxilTdgDXjHzsylT0YWOOtK80xPjU-XiBy79Ngpkimo_Y90a1rUBS9keAX/exec"; 
 
-// 2. KHAI BÁO BIẾN CƠ BẢN
+// Khai báo các thành phần giao diện
 const maKhachInput = document.getElementById('maKhachHang');
 const tenSpaInput = document.getElementById('tenSpa');
 const additionalFields = document.getElementById('additionalFields');
 const statusMsg = document.getElementById('statusMsg');
 const fileInput = document.getElementById('fileUpload');
-const fileCount = document.getElementById('fileCount');
+const fileCountText = document.getElementById('fileCount');
 
-// 3. LOGIC TỰ ĐỘNG TRA CỨU MÃ KHÁCH HÀNG (AUTO-CHECK)
-maKhachInput.addEventListener('input', async function() {
+// Biến quản lý thời gian chờ để tối ưu tốc độ gõ (Debounce)
+let typingTimer;
+const doneTypingInterval = 600; // Đợi 0.6 giây sau khi gõ xong mới bắt đầu check
+
+// 1. LOGIC TRA CỨU MÃ KHÁCH HÀNG
+maKhachInput.addEventListener('input', function() {
+    clearTimeout(typingTimer);
     const maKhach = this.value.trim().toUpperCase();
-    
-    // Nếu xóa hết ký tự thì reset form về trạng thái ban đầu
+
+    // Reset nếu xóa trống ô nhập
     if (maKhach === "") {
-        resetFormStatus();
+        resetForm();
         return;
     }
 
-    // Chỉ bắt đầu tìm khi nhập từ 4 ký tự (Tránh gọi API quá nhiều lần khi đang gõ)
-    if (maKhach.length < 4) {
+    // Chỉ thực hiện check khi mã có độ dài hợp lệ (ví dụ từ 4 ký tự như TVV1...)
+    if (maKhach.length >= 4) {
+        statusMsg.innerText = "🔍 Đang kiểm tra mã...";
+        statusMsg.style.color = "blue";
+        
+        typingTimer = setTimeout(() => {
+            performCheck(maKhach);
+        }, doneTypingInterval);
+    } else {
         statusMsg.innerText = "Đang nhập...";
         statusMsg.style.color = "gray";
-        return;
+        additionalFields.style.display = "none";
     }
+});
 
-    statusMsg.innerText = "🔍 Đang kiểm tra mã...";
-    statusMsg.style.color = "blue";
-
+async function performCheck(maKhach) {
     try {
         const response = await fetch(`${SCRIPT_URL}?action=checkMa&maKhach=${maKhach}`);
         const result = await response.json();
 
         if (result.success) {
-            // Hiển thị thông tin tìm được
+            // Hiển thị thông tin và giữ nguyên giao diện
             tenSpaInput.value = result.tenSpa;
-            statusMsg.innerText = "✓ Đã xác thực Spa: " + result.tenSpa;
+            statusMsg.innerText = "✅ Xác thực thành công: " + result.tenSpa;
             statusMsg.style.color = "green";
-            
-            // Hiện các ô nhập liệu bổ sung
             additionalFields.style.display = "block";
             
-            // Lưu dữ liệu tạm để dùng khi Submit
+            // Lưu dữ liệu vào biến toàn cục để dùng khi Submit
             window.userData = result; 
         } else {
+            // Không tìm thấy mã trong Sheet1
             tenSpaInput.value = "";
-            statusMsg.innerText = "✗ Không tìm thấy mã khách hàng này.";
+            statusMsg.innerText = "❌ Không tìm thấy mã. Vui lòng đăng ký tham gia trước.";
             statusMsg.style.color = "red";
             additionalFields.style.display = "none";
+            window.userData = null;
         }
     } catch (e) {
-        statusMsg.innerText = "⚠️ Lỗi kết nối máy chủ!";
+        statusMsg.innerText = "⚠️ Lỗi kết nối hệ thống!";
         statusMsg.style.color = "orange";
+        console.error("Fetch error:", e);
     }
-});
+}
 
-function resetFormStatus() {
+function resetForm() {
     tenSpaInput.value = "";
     statusMsg.innerText = "";
     additionalFields.style.display = "none";
+    window.userData = null;
 }
 
-// 4. XỬ LÝ HIỂN THỊ SỐ LƯỢNG FILE KHI CHỌN
+// 2. HIỂN THỊ SỐ LƯỢNG FILE KHI CHỌN
 fileInput.addEventListener('change', function() {
     const count = this.files.length;
-    fileCount.innerText = count > 0 ? `Đã chọn ${count} tệp` : "Chọn tệp hình ảnh/PDF";
+    if (fileCountText) {
+        fileCountText.innerText = count > 0 ? `Đã chọn ${count} tệp` : "Chọn tệp";
+    }
 });
 
-// 5. LOGIC GỬI DỮ LIỆU XÉT DUYỆT (SUBMIT FORM)
+// 3. LOGIC GỬI FORM (SUBMIT)
 document.getElementById('reviewForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     const files = fileInput.files;
 
-    // Kiểm tra nhanh
     if (!window.userData) {
-        alert("Vui lòng nhập Mã Khách Hàng hợp lệ trước!");
+        alert("Vui lòng nhập đúng Mã Khách Hàng để hệ thống xác thực trước khi gửi!");
         return;
     }
 
-    btn.innerText = "ĐANG TẢI DỮ LIỆU (VUI LÒNG ĐỢI)...";
+    btn.innerText = "ĐANG TẢI HỒ SƠ (VUI LÒNG ĐỢI)...";
     btn.disabled = true;
 
     try {
-        // Đọc file sang Base64
+        // Chuyển đổi các tệp sang định dạng Base64 để gửi qua Google Script
         const filePromises = Array.from(files).map(file => {
             return new Promise(resolve => {
                 const reader = new FileReader();
@@ -99,44 +116,4 @@ document.getElementById('reviewForm').addEventListener('submit', async function(
 
         const fileData = await Promise.all(filePromises);
 
-        // Lấy danh sách checkbox đã chọn
-        const getChecked = (name) => Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
-                                         .map(cb => cb.value).join(', ');
-
-        const payload = {
-            action: "submitReview",
-            maKhach: maKhachInput.value.trim().toUpperCase(),
-            tenSpa: tenSpaInput.value,
-            team: window.userData.team || "",
-            sale: window.userData.sale || "",
-            tenKhach: window.userData.tenKhach || "",
-            soGiuong: document.getElementById('soGiuong').value,
-            soNhanSu: document.getElementById('soNhanSu').value,
-            lieuTrinhCoBan: document.getElementById('lieuTrinhCoBan').value,
-            lieuTrinhNangCao: document.getElementById('lieuTrinhNangCao').value,
-            thietBiCoBan: getChecked('deviceBasic'),
-            thietBiNangCao: getChecked('deviceAdvanced'),
-            bangCap: document.getElementById('bangCap').value,
-            files: fileData
-        };
-
-        const response = await fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        });
-
-        const finalResult = await response.json();
-        
-        if (finalResult.status === 'success') {
-            alert("Gửi hồ sơ xét duyệt thành công! Cảm ơn bạn.");
-            location.reload();
-        } else {
-            throw new Error(finalResult.message);
-        }
-
-    } catch (error) {
-        alert("Lỗi: " + error.message);
-        btn.disabled = false;
-        btn.innerText = "GỬI THÔNG TIN XÉT DUYỆT";
-    }
-});
+        // Thu thập dữ liệu từ các Check
