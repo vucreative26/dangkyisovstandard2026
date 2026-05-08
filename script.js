@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZaJ3dKmgDrUfBLkw8uiYDh8h1XR-Y6U0NBIQPqxSz8X1CsZTutEZcfWFh2gRIJHCZ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzzhzJx9XitYW46s0RNdDmlfjYE_KEcFmLXg8_PXYe9PlarocD6kGeBHHkcUH-PDjE3/exec";
 
 const maInput = document.getElementById('maKhachHang');
 const submitBtn = document.getElementById('submitBtn');
