@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZaJ3dKmgDrUfBLkw8uiYDh8h1XR-Y6U0NBIQPqxSz8X1CsZTutEZcfWFh2gRIJHCZ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQI0P_GBnsQFr8dtjSsWoAt59YS9tanlF6aXIIZa2fnbuuRz4xke_9WPwseo_mBm6Z/exec";
 
 // Kiểm tra đăng nhập
 if (localStorage.getItem('adminLoggedIn') !== 'true') {
@@ -9,7 +9,7 @@ if (localStorage.getItem('adminLoggedIn') !== 'true') {
 document.getElementById('userName').textContent = localStorage.getItem('adminUsername') || 'Admin';
 
 // Biến toàn cục
-let allData = { sheet1: [], sheet2: [] };
+let allData = { sheet1: [], sheet2: [], sheet3: [] };
 let currentReviewData = null;
 let manualScores = {
     top: null,
@@ -57,6 +57,7 @@ async function loadAllData() {
         // Debug: Kiểm tra dữ liệu
         console.log('Sheet1 (Đăng ký):', allData.sheet1.length, 'bản ghi');
         console.log('Sheet2 (Xét duyệt):', allData.sheet2.length, 'bản ghi');
+        console.log('Sheet3 (Đã duyệt):', allData.sheet3.length, 'bản ghi');
         
         loadPage('dashboard');
     } catch (error) {
@@ -214,6 +215,7 @@ function renderDuyetHoSo() {
     console.log('=== DEBUG DUYỆT HỒ SƠ ===');
     console.log('Tổng Sheet1:', allData.sheet1.length);
     console.log('Tổng Sheet2:', allData.sheet2.length);
+    console.log('Tổng Sheet3 (Đã duyệt):', allData.sheet3.length);
     
     // In ra tất cả mã thành viên trong Sheet1
     console.log('Mã thành viên trong Sheet1:');
@@ -224,6 +226,12 @@ function renderDuyetHoSo() {
     // In ra tất cả mã thành viên trong Sheet2
     console.log('Mã thành viên trong Sheet2:');
     allData.sheet2.forEach((row, idx) => {
+        console.log(`  [${idx}] Mã: "${row[5]}" - Spa: ${row[3]}`);
+    });
+    
+    // In ra tất cả mã thành viên trong Sheet3 (Đã duyệt)
+    console.log('Mã thành viên trong Sheet3 (Đã duyệt):');
+    allData.sheet3.forEach((row, idx) => {
         console.log(`  [${idx}] Mã: "${row[5]}" - Spa: ${row[3]}`);
     });
     
@@ -294,23 +302,35 @@ function renderDuyetHoSo() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${readyForReview.map(row => `
-                        <tr>
+                    ${readyForReview.map(row => {
+                        const maKhach = row[5];
+                        // Kiểm tra xem mã này đã được duyệt chưa (có trong Sheet3)
+                        const isDuyet = allData.sheet3.some(row3 => {
+                            const maKhach3 = row3[5] ? row3[5].toString().trim().toUpperCase() : '';
+                            return maKhach3 === maKhach.toString().trim().toUpperCase();
+                        });
+                        
+                        const rowStyle = isDuyet ? 'style="background: #d4edda; color: #155724;"' : '';
+                        const buttonHtml = isDuyet 
+                            ? '<button class="btn btn-success btn-sm" disabled style="cursor: not-allowed; opacity: 0.6;">✓ Đã duyệt</button>'
+                            : `<button class="btn btn-primary btn-sm" onclick="openXetDuyetModal('${maKhach}')">Xét duyệt</button>`;
+                        
+                        return `
+                        <tr ${rowStyle}>
                             <td>${row[1] || '-'}</td>
                             <td>${row[2] || '-'}</td>
                             <td>${row[4] || '-'}</td>
                             <td>${row[3] || '-'}</td>
-                            <td><strong>${row[5] || '-'}</strong></td>
+                            <td><strong>${maKhach || '-'}</strong></td>
                             <td>${row[6] || '-'}</td>
                             <td>${row[7] || '-'}</td>
                             <td>${formatDate(row[0])}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm" onclick="openXetDuyetModal('${row[5]}')">
-                                    Xét duyệt
-                                </button>
+                                ${buttonHtml}
                             </td>
                         </tr>
-                    `).join('')}
+                    `;
+                    }).join('')}
                 </tbody>
             </table>
         </div>
