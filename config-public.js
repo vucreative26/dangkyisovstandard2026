@@ -14,7 +14,7 @@ const APP_CONFIG = {
     adminAccounts: {
         "phongdaotao": "Daotao123",
         "admin": "admin123",
-        "phongdaotao": "Daotao123",
+        "phongdaotao": "Daotao123"
     }
 };
 
