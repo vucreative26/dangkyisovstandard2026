@@ -13,7 +13,8 @@ const APP_CONFIG = {
     // ⚠️ ĐỔI MẬT KHẨU NÀY KHI DEPLOY THẬT!
     adminAccounts: {
         "demo": "demo123",
-        "admin": "admin123"
+        "admin": "admin123",
+        "phongdaotao": "Daotao123",
     }
 };
 
