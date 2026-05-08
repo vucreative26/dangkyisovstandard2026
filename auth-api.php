@@ -17,7 +17,7 @@ $CONFIG = [
     'adminAccounts' => [
         'admin' => 'MatKhauManh@2026',  // ← ĐỔI MẬT KHẨU NÀY
         'admin2' => 'Admin2@2026',
-        'phongdaotao' => 'daotao123',
+        'phongdaotao' => 'Daotao123',
     ],
     'sessionTimeout' => 8 * 60 * 60, // 8 giờ (giây)
     'maxLoginAttempts' => 5,
