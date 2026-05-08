@@ -704,8 +704,18 @@ function calculateStar() {
 async function submitXetDuyet(e) {
     e.preventDefault();
     
-    const getVal = (id) => document.getElementById(id).value;
-    const getChecked = (name) => Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(c => c.value).join(", ");
+    const getVal = (id) => {
+        const el = document.getElementById(id);
+        return el ? el.value : '';
+    };
+    
+    // Lấy dữ liệu từ Sheet2
+    const dataSheet2 = allData.sheet2.find(row => row[5] === currentReviewData.maKhach);
+    
+    if (!dataSheet2) {
+        alert('Không tìm thấy thông tin chi tiết!');
+        return;
+    }
     
     const payload = {
         action: "adminSubmitReview",
@@ -714,13 +724,13 @@ async function submitXetDuyet(e) {
         tenKhach: currentReviewData.tenKhach,
         team: currentReviewData.team,
         sale: currentReviewData.sale,
-        soGiuong: getVal('soGiuong'),
-        soNhanSu: getVal('soNhanSu'),
-        lieuTrinhCoBan: getVal('lieuTrinhCoBan'),
-        lieuTrinhNangCao: getVal('lieuTrinhNangCao'),
-        thietBiCoBan: getChecked('deviceBasic'),
-        thietBiNangCao: getChecked('deviceAdvanced'),
-        bangCap: getVal('bangCap'),
+        soGiuong: dataSheet2[6] || '',
+        soNhanSu: dataSheet2[7] || '',
+        lieuTrinhCoBan: dataSheet2[8] || '',
+        lieuTrinhNangCao: dataSheet2[9] || '',
+        thietBiCoBan: dataSheet2[10] || '',
+        thietBiNangCao: dataSheet2[11] || '',
+        bangCap: dataSheet2[12] || '',
         soSaoXetDuyet: getVal('soSaoXetDuyet')
     };
     
