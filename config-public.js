@@ -12,7 +12,7 @@ const APP_CONFIG = {
     // Tài khoản DEMO (CHỈ DÙNG GITHUB PAGES)
     // ⚠️ ĐỔI MẬT KHẨU NÀY KHI DEPLOY THẬT!
     adminAccounts: {
-        "demo": "demo123",
+        "phongdaotao": "Daotao123",
         "admin": "admin123",
         "phongdaotao": "Daotao123",
     }
