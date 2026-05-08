@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQI0P_GBnsQFr8dtjSsWoAt59YS9tanlF6aXIIZa2fnbuuRz4xke_9WPwseo_mBm6Z/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzzhzJx9XitYW46s0RNdDmlfjYE_KEcFmLXg8_PXYe9PlarocD6kGeBHHkcUH-PDjE3/exec";
 
 // Kiểm tra đăng nhập
 if (localStorage.getItem('adminLoggedIn') !== 'true') {
