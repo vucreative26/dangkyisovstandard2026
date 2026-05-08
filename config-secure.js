@@ -6,7 +6,7 @@ const APP_CONFIG = {
     authApiUrl: "auth-api.php", // Hoặc đường dẫn đầy đủ: https://domain.com/api/auth-api.php
     
     // URL Google Apps Script
-    scriptUrl: "https://script.google.com/macros/s/AKfycbzQI0P_GBnsQFr8dtjSsWoAt59YS9tanlF6aXIIZa2fnbuuRz4xke_9WPwseo_mBm6Z/exec",
+    scriptUrl: "https://script.google.com/macros/s/AKfycbzZaJ3dKmgDrUfBLkw8uiYDh8h1XR-Y6U0NBIQPqxSz8X1CsZTutEZcfWFh2gRIJHCZ/exec",
     
     // Cấu hình session (client-side)
     sessionTimeout: 8 * 60 * 60 * 1000, // 8 giờ (milliseconds)
