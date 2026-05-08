@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị - ISOV 2026</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/images/anh_isov_standard2026.png" alt="Logo" class="sidebar-logo" onerror="this.style.display='none'">
+                <h3>ISOV ADMIN</h3>
+                <p>Hệ thống quản trị</p>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" data-page="dashboard">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-page="duyet-ho-so">
+                    <span class="icon">✅</span>
+                    <span>Duyệt hồ sơ</span>
+                </a>
+                <a href="#" class="menu-item" data-page="khach-hang">
+                    <span class="icon">👥</span>
+                    <span>Khách hàng</span>
+                </a>
+                <a href="#" class="menu-item" data-page="cai-dat">
+                    <span class="icon">⚙️</span>
+                    <span>Cài đặt</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="btnLogout">
+                    <span class="icon">🚪</span>
+                    <span>Đăng xuất</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h2 id="pageTitle">Dashboard</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span class="user-icon">👤</span>
+                        <span class="user-name" id="userName">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- CONTENT AREA -->
+            <div class="content-area" id="contentArea">
+                <!-- Nội dung sẽ được load động -->
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL XÉT DUYỆT -->
+    <div class="modal" id="modalXetDuyet">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>XÉT DUYỆT HỒ SƠ</h3>
+                <button class="btn-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Nội dung form xét duyệt -->
+            </div>
+        </div>
+    </div>
+
+    <script src="config-secure.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

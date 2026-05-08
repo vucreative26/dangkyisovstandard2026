@@ -330,3 +330,119 @@ textarea {
         grid-template-columns: 1fr;
     }
 }
+
+/* Tùy chỉnh riêng cho trang Check */
+.check-card {
+    max-width: 550px !important;
+    margin: 0 auto;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.readonly-input {
+    background-color: #f1f1f1 !important;
+    border: 1px dashed #bbb !important;
+    color: #555;
+    cursor: not-allowed;
+}
+
+.status-text {
+    font-size: 0.85rem;
+    margin-top: 6px;
+    font-weight: bold;
+}
+
+.result-container {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px dashed #ccc;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.label-text {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.badge {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.final-note {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.final-note.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+.final-note.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 5px solid #ff9800;
+}
+
+/* Status badges cho trang kiểm tra */
+.status-badge {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-badge.completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.not-found {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%; /* Đảm bảo các ô đơn lẻ chiếm hết chiều rộng form */
+}
+
+/* Đảm bảo file-input-wrapper dài bằng ô Tên Spa */
+.file-input-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+}

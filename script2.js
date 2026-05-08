@@ -1,125 +1,132 @@
-// 1. CẤU HÌNH
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWFN4wIJTxilTdgDXjHzsylT0YWOOtK80xPjU-XiBy79Ngpkimo_Y90a1rUBS9keAX/exec"; 
-
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQI0P_GBnsQFr8dtjSsWoAt59YS9tanlF6aXIIZa2fnbuuRz4xke_9WPwseo_mBm6Z/exec";
 const maKhachInput = document.getElementById('maKhachHang');
-const tenSpaInput = document.getElementById('tenSpa');
 const additionalFields = document.getElementById('additionalFields');
 const statusMsg = document.getElementById('statusMsg');
-const fileInput = document.getElementById('fileUpload'); // Đảm bảo ID này khớp với HTML
+const fileUpload = document.getElementById('fileUpload');
+const fileCount = document.getElementById('fileCount');
 
-let typingTimer;
-const doneTypingInterval = 500; 
-
-// 2. CHẶN PHÍM ENTER
-document.getElementById('reviewForm').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        return false;
+// Hiển thị số lượng file đã chọn
+fileUpload.addEventListener('change', function() {
+    const numFiles = this.files.length;
+    if (numFiles > 0) {
+        fileCount.textContent = `Đã chọn ${numFiles} file`;
+        fileCount.style.color = '#28a745';
+    } else {
+        fileCount.textContent = 'Click để chọn ít nhất 1 file';
+        fileCount.style.color = '#666';
     }
 });
 
-// 3. TỰ ĐỘNG KIỂM TRA MÃ
-maKhachInput.addEventListener('input', function() {
-    clearTimeout(typingTimer);
+// Kiểm tra mã thành viên khi nhập xong
+maKhachInput.addEventListener('blur', async function() {
     const maKhach = this.value.trim().toUpperCase();
-    if (maKhach === "") { resetUI(); return; }
-
-    if (maKhach.length >= 4) {
-        statusMsg.innerText = "🔍 Đang kiểm tra mã...";
-        statusMsg.style.color = "blue";
-        typingTimer = setTimeout(() => { fetchData(maKhach); }, doneTypingInterval);
+    if (maKhach.length < 3) {
+        statusMsg.textContent = '';
+        statusMsg.style.color = '';
+        additionalFields.style.display = 'none';
+        return;
+    }
+    
+    statusMsg.textContent = 'Đang kiểm tra...';
+    statusMsg.style.color = '#007bff';
+    
+    try {
+        const res = await fetch(`${SCRIPT_URL}?action=checkBeforeReview&maKhach=${maKhach}`);
+        const result = await res.json();
+        
+        if (!result.hasDangKy) {
+            // Mã chưa có trên Sheet1
+            statusMsg.textContent = 'Mã thành viên chưa có trên hệ thống, vui lòng đăng ký tham gia';
+            statusMsg.style.color = '#dc3545';
+            additionalFields.style.display = 'none';
+            document.getElementById('tenSpa').value = '';
+        } else if (result.hasXetDuyet) {
+            // Mã có trên Sheet1 và đã có trên Sheet2
+            statusMsg.textContent = 'Mã thành viên đã tồn tại, vui lòng liên hệ Admin để cập nhật thông tin';
+            statusMsg.style.color = '#dc3545';
+            additionalFields.style.display = 'none';
+            document.getElementById('tenSpa').value = result.info.tenSpa;
+        } else {
+            // Mã có trên Sheet1 nhưng chưa có trên Sheet2 - hợp lệ
+            statusMsg.textContent = 'Mã thành viên hợp lệ';
+            statusMsg.style.color = '#28a745';
+            document.getElementById('tenSpa').value = result.info.tenSpa;
+            window.parentData = result.info; // Lưu để gửi kèm
+            additionalFields.style.display = 'block';
+        }
+    } catch (e) {
+        console.error(e);
+        statusMsg.textContent = 'Lỗi kiểm tra mã thành viên';
+        statusMsg.style.color = '#dc3545';
+        additionalFields.style.display = 'none';
     }
 });
 
-async function fetchData(maKhach) {
-    try {
-        const response = await fetch(`${SCRIPT_URL}?action=checkMa&maKhach=${maKhach}`);
-        const result = await response.json();
-        if (result.success) {
-            tenSpaInput.value = result.tenSpa;
-            statusMsg.innerText = "✅ Xác thực: " + result.tenSpa;
-            statusMsg.style.color = "green";
-            additionalFields.style.display = "block";
-            window.userData = result; 
-        } else {
-            statusMsg.innerText = "❌ Không tìm thấy mã.";
-            statusMsg.style.color = "red";
-            additionalFields.style.display = "none";
-        }
-    } catch (e) { statusMsg.innerText = "⚠️ Lỗi kết nối!"; }
-}
-
-function resetUI() {
-    tenSpaInput.value = "";
-    statusMsg.innerText = "";
-    additionalFields.style.display = "none";
-}
-
-// 4. LOGIC CHUYỂN ĐỔI FILE SANG BASE64
-async function getFilesData(input) {
-    const files = input.files;
-    const promises = Array.from(files).map(file => {
-        return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                resolve({
-                    name: file.name,
-                    mimeType: file.type,
-                    data: e.target.result.split(',')[1] // Lấy phần dữ liệu Base64
-                });
-            };
-            reader.readAsDataURL(file);
-        });
-    });
-    return Promise.all(promises);
-}
-
-// 5. GỬI FORM
+// Xử lý gửi form xét duyệt
 document.getElementById('reviewForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
     const btn = document.getElementById('submitBtn');
-    if (!window.userData) { alert("Vui lòng xác thực mã trước!"); return; }
-
-    btn.innerText = "ĐANG TẢI ẢNH & GỬI HỒ SƠ...";
+    const files = fileUpload.files;
+    
+    btn.innerText = "ĐANG GỬI...";
     btn.disabled = true;
 
     try {
-        const fileData = await getFilesData(fileInput); // Đọc file ở đây
-        const getChecked = (name) => Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(', ');
+        const getVal = (id) => document.getElementById(id).value;
+        const getChecked = (name) => Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(c => c.value).join(", ");
+
+        // Xử lý upload file nếu có
+        let fileData = [];
+        if (files.length > 0) {
+            const filePromises = Array.from(files).map(file => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => resolve({
+                        name: file.name,
+                        mimeType: file.type,
+                        data: ev.target.result.split(',')[1]
+                    });
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            });
+            fileData = await Promise.all(filePromises);
+        }
 
         const payload = {
             action: "submitReview",
-            folderTag: "xet_duyet", // Nhãn để App Script phân loại thư mục
             maKhach: maKhachInput.value.trim().toUpperCase(),
-            tenSpa: tenSpaInput.value,
-            team: window.userData.team,
-            sale: window.userData.sale,
-            tenKhach: window.userData.tenKhach,
-            soGiuong: document.getElementById('soGiuong').value,
-            soNhanSu: document.getElementById('soNhanSu').value,
-            lieuTrinhCoBan: document.getElementById('lieuTrinhCoBan').value,
-            lieuTrinhNangCao: document.getElementById('lieuTrinhNangCao').value,
+            tenSpa: getVal('tenSpa'),
+            tenKhach: window.parentData.tenKhach,
+            team: window.parentData.team,
+            sale: window.parentData.sale,
+            soGiuong: getVal('soGiuong'),
+            soNhanSu: getVal('soNhanSu'),
+            lieuTrinhCoBan: getVal('lieuTrinhCoBan'), 
+            lieuTrinhNangCao: getVal('lieuTrinhNangCao'),
             thietBiCoBan: getChecked('deviceBasic'),
             thietBiNangCao: getChecked('deviceAdvanced'),
-            bangCap: document.getElementById('bangCap').value,
-            files: fileData // Dữ liệu ảnh đã có Base64
+            bangCap: getVal('bangCap'),
+            files: fileData
         };
 
-        const res = await fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
+        const response = await fetch(SCRIPT_URL, { 
+            method: 'POST', 
+            body: JSON.stringify(payload) 
         });
-
-        const data = await res.json();
-        if (data.status === 'success') {
-            alert("Gửi thành công! Ảnh đã được lưu vào thư mục Xét Duyệt.");
+        
+        const result = await response.json();
+        if (result.status === 'success') {
+            alert("Gửi xét duyệt thành công!");
             location.reload();
         } else {
-            alert("Lỗi: " + data.message);
-            btn.disabled = false;
+            alert("Lỗi: " + result.message);
         }
-    } catch (err) {
-        alert("Lỗi hệ thống khi tải ảnh!");
+    } catch (e) { 
+        alert("Lỗi gửi dữ liệu: " + e.message); 
+    } finally {
+        btn.innerText = "GỬI THÔNG TIN XÉT DUYỆT";
         btn.disabled = false;
     }
 });

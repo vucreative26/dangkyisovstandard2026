@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra trạng thái - ISOV 2026</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header-menu">
+            <button onclick="location.href='index.html'">ĐĂNG KÝ THAM GIA</button>
+            <button onclick="location.href='index2.html'">ĐĂNG KÝ XÉT DUYỆT</button>
+            <button class="active" onclick="location.href='index3.html'">KIỂM TRA</button>
+            <button onclick="location.href='login.html'">ĐĂNG NHẬP</button>
+        </header>
+
+        <main class="main-content">
+            <div class="left-side">
+                <h1 class="title">KIỂM TRA TRẠNG THÁI</h1>
+                <h2 class="subtitle">HỒ SƠ ĐĂNG KÝ</h2>
+                <div class="image-container">
+                    <img src="assets/images/anh_isov_standard2026.png" alt="ISOV Korea Standard Spa 2026" class="featured-image">
+                </div>
+            </div>
+
+            <div class="right-side">
+                <div class="registration-card">
+                    <div class="form-group">
+                        <label>MÃ THÀNH VIÊN</label>
+                        <input type="text" id="maKhachHang" placeholder="Nhập mã thành viên của bạn" oninput="this.value = this.value.toUpperCase()" required>
+                        <small id="statusMsg" style="display:block; margin-top:8px; font-size:12px; font-weight:700;"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>TÊN SPA / CƠ SỞ THẨM MỸ</label>
+                        <input type="text" id="tenSpa" readonly placeholder="Hệ thống sẽ tự động hiển thị" style="background: #f8f8f8; cursor: not-allowed;">
+                    </div>
+
+                    <div id="checkResult" style="display: none; margin-top: 25px; padding-top: 25px; border-top: 2px dashed #ddd;">
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span style="font-weight: 700; font-size: 14px; color: #333;">
+                                    <span style="color: var(--primary-red); font-size: 18px;">1️⃣</span> Đăng ký tham gia
+                                </span>
+                                <span id="sttDangKy" class="status-badge"></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 700; font-size: 14px; color: #333;">
+                                    <span style="color: var(--primary-red); font-size: 18px;">2️⃣</span> Đăng ký xét duyệt
+                                </span>
+                                <span id="sttXetDuyet" class="status-badge"></span>
+                            </div>
+                        </div>
+                        
+                        <div id="finalNote" style="margin-top: 20px; padding: 18px; border-radius: 15px; font-size: 14px; line-height: 1.7; font-weight: 600;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2026 Ho Anh Vu. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script3.js"></script>
+</body>
+</html>

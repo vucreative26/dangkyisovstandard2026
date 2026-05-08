@@ -9,10 +9,10 @@
 <body>
     <div class="container">
         <header class="header-menu">
-    <button class="active" onclick="location.href='index.html'">ĐĂNG KÝ THAM GIA</button>
-    <button onclick="location.href='index2.html'">ĐĂNG KÝ XÉT DUYỆT</button>
-    <button>KIỂM TRA</button>
-    <button>ĐĂNG NHẬP</button>
+            <button class="active" onclick="location.href='index.html'">ĐĂNG KÝ THAM GIA</button>
+            <button onclick="location.href='index2.html'">ĐĂNG KÝ XÉT DUYỆT</button>
+            <button onclick="location.href='index3.html'">KIỂM TRA</button>
+            <button onclick="location.href='login.html'">ĐĂNG NHẬP</button>
         </header>
 
         <main class="main-content">
@@ -55,6 +55,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label>MÃ THÀNH VIÊN</label>
+                        <input type="text" id="maKhachHang" placeholder="Ví dụ: TVV1111" required oninput="this.value = this.value.toUpperCase()">
+                        <small id="maStatusMsg" style="display:block; margin-top:5px; font-size:12px;"></small>
+                    </div>
+
+                    <div class="form-group">
                         <label>TÊN SPA / CƠ SỞ THẨM MỸ</label>
                         <input type="text" id="tenSpa" placeholder="điền vào đây" required>
                     </div>
@@ -66,15 +72,22 @@
 
                     <div class="row">
                         <div class="form-group flex-1">
-                            <label>MÃ KHÁCH HÀNG</label>
-                            <input type="text" id="maKhachHang" placeholder="điền vào đây" required>
+                            <label>SỐ SAO MONG MUỐN</label>
+                            <select id="soSaoMongMuon" required>
+                                <option value="" disabled selected>Chọn cấp độ sao...</option>
+                                <option value="3 Sao">Đạt tiêu chuẩn</option>
+                                <option value="3 Sao">3 Sao</option>
+                                <option value="4 Sao">4 Sao</option>
+                                <option value="5 Sao">5 Sao</option>
+                            </select>
                         </div>
-                        <div class="form-group flex-1">
-                            <label>HỒ SƠ/GIẤY PHÉP</label>
-                            <div class="file-input-wrapper">
-                                <input type="file" id="fileUpload" multiple accept="image/*,.pdf" required>
-                                <span id="fileCount">Click để chọn ít nhất 1 file </span>
-                            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>HỒ SƠ / GIẤY PHÉP</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="fileUpload" multiple accept="image/*,.pdf" required>
+                            <span id="fileCount">Click để chọn ít nhất 1 file</span>
                         </div>
                     </div>
 
@@ -87,7 +100,6 @@
             <p>© 2026 Ho Anh Vu. All rights reserved.</p>
         </footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
